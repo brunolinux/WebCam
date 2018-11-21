@@ -7,7 +7,7 @@ faceCascade = cv2.CascadeClassifier(cascPath)
 cap = cv2.VideoCapture()
 cap.open("rtmp://0.0.0.0/flvplayback/myStream live=1")
 
-ffmpeg = 'FFMPEG'
+ffmpeg = 'ffmpeg'
 dimension = '{}x{}'.format(640, 480)
 f_format = 'bgr24' # remember OpenCV uses bgr format
 fps = str(cap.get(cv2.CAP_PROP_FPS))
