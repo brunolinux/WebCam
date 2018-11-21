@@ -1,21 +1,17 @@
 import cv2
 from base_camera import BaseCamera
 
-
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
+
 
 class Camera(BaseCamera):
     @staticmethod
     def frames():
-        camera = cv2.VideoCapture(0)
-        if not camera.isOpened():
-            raise RuntimeError('Could not start camera.')
-
+        cap = cv2.VideoCapture()
+        cap.open("rtmp://0.0.0.0/flvplayback/myStream live=1")
         while True:
-            # read current frame
-            _, img = camera.read()
-
+            err,img = cap.read()
             # face detection
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -32,3 +28,6 @@ class Camera(BaseCamera):
 
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
+
+
+
