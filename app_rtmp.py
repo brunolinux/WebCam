@@ -5,7 +5,7 @@ cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 cap = cv2.VideoCapture()
-cap.open("rtmp://0.0.0.0/flvplayback/myStream live=1")
+cap.open("rtmp://35.240.114.230/flvplayback/myStream live=1")
 
 ffmpeg = 'ffmpeg'
 dimension = '{}x{}'.format(640, 480)
