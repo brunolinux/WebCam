@@ -10,10 +10,14 @@ class Camera(BaseCamera):
     piCam = PiVideoStream(resolution=(640, 480))
 
     @staticmethod
-    def frames():
-        # start a thread to read continously read the camera 
-        self.piCam.start()
-
+    def frames(cls):
+        try:
+            # start a thread to read continously read the camera 
+            cls.piCam.start()
+        except: 
+            print("Error! Can not read frames from the PiCamera!")  
+            return          
+    
         while True:
             # always take the first image
             img = piCam.read()
@@ -34,5 +38,6 @@ class Camera(BaseCamera):
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
 
-    def stopCamera(self):
-        self.piCam.stop()
+    @staticmethod
+    def stopCamera(cls):
+        cls.piCam.stop()

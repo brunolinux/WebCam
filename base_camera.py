@@ -102,6 +102,7 @@ class BaseCamera(object):
                 break
         BaseCamera.thread = None
 
-    def stopCamera(self):
+    @staticmethod
+    def stopCamera(cls):
         """"stop the camera to take pictures"""
         raise RuntimeError('Must be implemented by subclasses.')
