@@ -6,13 +6,13 @@ cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 
-class Camera(BaseCamera):
+class Camera(BaseCamera):   
     piCam = PiVideoStream(resolution=(640, 480))
 
     @staticmethod
     def frames():
         # start a thread to read continously read the camera 
-        piCam.start()
+        self.piCam.start()
 
         while True:
             # always take the first image
@@ -35,4 +35,4 @@ class Camera(BaseCamera):
             yield cv2.imencode('.jpg', img)[1].tobytes()
 
     def stopCamera(self):
-        piCam.stop()
+        self.piCam.stop()
