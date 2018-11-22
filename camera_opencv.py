@@ -20,7 +20,7 @@ class Camera(BaseCamera):
     
         while True:
             # always take the first image
-            img = piCam.read()
+            img = Camera.piCam.read()
             # face detection
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
