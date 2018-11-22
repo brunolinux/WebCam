@@ -1,19 +1,22 @@
 import cv2
 from base_camera import BaseCamera
+from pivideoStream import PiVideoStream
 
 cascPath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascPath)
 
 
 class Camera(BaseCamera):
+    piCam = PiVideoStream(resolution=(640, 480))
+
     @staticmethod
     def frames():
-        cap = cv2.VideoCapture()
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH,640);
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT,480);
-        cap.open(0)
+        # start a thread to read continously read the camera 
+        piCam.start()
+
         while True:
-            err,img = cap.read()
+            # always take the first image
+            img = piCam.read()
             # face detection
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -31,5 +34,5 @@ class Camera(BaseCamera):
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
 
-
-
+    def stopCamera(self):
+        piCam.stop()

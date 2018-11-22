@@ -97,6 +97,11 @@ class BaseCamera(object):
             # the last 10 seconds then stop the thread
             if time.time() - BaseCamera.last_access > 10:
                 frames_iterator.close()
+                stopCamera()
                 print('Stopping camera thread due to inactivity.')
                 break
         BaseCamera.thread = None
+
+    def stopCamera(self):
+        """"stop the camera to take pictures"""
+        raise RuntimeError('Must be implemented by subclasses.')
