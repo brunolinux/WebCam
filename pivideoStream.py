@@ -3,6 +3,7 @@
 from picamera.array import PiRGBArray 
 from picamera import PiCamera 
 from threading import Thread 
+import numpy as np 
 
 class PiVideoStream:
     def __init__(self, resolution=(320, 240), framerate=32):
@@ -31,6 +32,7 @@ class PiVideoStream:
             self.frame = f.array 
             self.rawCapture.truncate(0) 
             
+
             # if the thread indicator variable is set, stop the thread
             # and release camera resources 
             if self.stopped: 
@@ -41,7 +43,7 @@ class PiVideoStream:
 
     def read(self):
         # return the frame most recently read 
-        return self.frame 
+        return self.frame.astype(np.uint8)
 
     def stop(self): 
         # indicate that the thread should be stopped 
