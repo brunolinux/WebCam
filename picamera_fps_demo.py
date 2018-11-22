@@ -6,7 +6,7 @@ from utils.fps import FPS
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import argparse
-#import cv2 
+import cv2 
 import time
 
 # construct the argument parse and parse the arguments
@@ -38,9 +38,9 @@ for (i, f) in enumerate(stream):
 	#frame = imutils.resize(frame, width=400)
  
 	# check to see if the frame should be displayed to our screen
-	#if args["display"] > 0:
-	#	cv2.imshow("Frame", frame)
-	#	key = cv2.waitKey(1) & 0xFF
+	if args["display"] > 0:
+		cv2.imshow("Frame", frame)
+		key = cv2.waitKey(1) & 0xFF
  
 	# clear the stream in preparation for the next frame and update
 	# the FPS counter
@@ -79,9 +79,9 @@ while fps._numFrames < args["num_frames"]:
 	#frame = imutils.resize(frame, width=400)
  
 	# check to see if the frame should be displayed to our screen
-	#if args["display"] > 0:
-	#	cv2.imshow("Frame", frame)
-	#	key = cv2.waitKey(1) & 0xFF
+	if args["display"] > 0:
+		cv2.imshow("Frame", frame)
+		key = cv2.waitKey(1) & 0xFF
  
 	# update the FPS counter
 	fps.update()
