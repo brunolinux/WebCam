@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 
+import sys
+sys.path.append('..')
+
 from pivideoStream import PiVideoStream 
 from utils.fps import FPS 
 from picamera.array import PiRGBArray
