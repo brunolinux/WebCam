@@ -6,7 +6,7 @@ from .camera_opencv import Camera
 webcam = Flask(__name__)
 
 
-@app.route('/')
+@webcam.route('/')
 def index():
     """Video streaming home page."""
     return render_template('index.html')
@@ -20,7 +20,7 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
-@app.route('/video_feed')
+@webcam.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
     return Response(gen(Camera()),
@@ -28,4 +28,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    webcam.run(host='0.0.0.0', port=8000, threaded=True)
+    webcam.run(debug=False, port=8000, threaded=True)
