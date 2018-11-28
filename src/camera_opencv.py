@@ -1,7 +1,7 @@
 import cv2
-from base_camera import BaseCamera
-from pivideoStream import PiVideoStream
 import time 
+from .base_camera import BaseCamera
+from .pivideoStream import PiVideoStream
 from .detection import Detection
 
 detector = Detection("./model/detect.tflite", "./model/coco_labels_list.txt")
