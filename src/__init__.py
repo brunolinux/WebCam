@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from importlib import import_module
 from flask import Flask, render_template, Response
-from camera_opencv import Camera	
+from .camera_opencv import Camera	
 
 webcam = Flask(__name__)
 
