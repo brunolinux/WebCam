@@ -3,7 +3,7 @@ from importlib import import_module
 from flask import Flask, render_template, Response
 from camera_opencv import Camera	
 
-app = Flask(__name__)
+webcam = Flask(__name__)
 
 
 @app.route('/')
@@ -28,4 +28,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, threaded=True)
+    webcam.run(host='0.0.0.0', port=80, threaded=True)
