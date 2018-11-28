@@ -2,10 +2,9 @@ import cv2
 from base_camera import BaseCamera
 from pivideoStream import PiVideoStream
 import time 
+import detection
 
-
-cascPath = "haarcascade_frontalface_default.xml"
-faceCascade = cv2.CascadeClassifier(cascPath)
+detector = detection.Detection("./model/detect.tflite", "./model/coco_labels_list.txt")
 
 
 class Camera(BaseCamera):   
@@ -27,20 +26,18 @@ class Camera(BaseCamera):
             img = Camera.piCam.read()
             #print(img.shape)
 
-            # face detection
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img_1 = cv2.resize(img, (300, 300))
 
-            faces = faceCascade.detectMultiScale(
-                gray,
-                scaleFactor=1.1,
-                minNeighbors=5,
-                minSize=(30, 30))
+            out = detector.frameDetect(img_1)
 
-            # Draw a rectangle around the faces
-            for (x, y, w, h) in faces:
-                cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
-
-
+            for n in range(out.numbers): 
+                ymin = int(out.locations[4 * n] * img.shape[0]);
+                xmin = int(out.locations[4 * n + 1] * img.shape[1]);
+                ymax = int(out.locations[4 * n + 2] * img.shape[0]);
+                xmax = int(out.locations[4 * n + 3] * img.shape[1]);
+                cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (255, 0, 0), thickness=1);
+                cv2.putText(img, out.classes[n], (xmin, ymin - 5),
+                            cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 0));
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
 

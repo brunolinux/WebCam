@@ -4,10 +4,17 @@ This article describe how to use the object detection model based on the tensorf
 
 open the terminal and run the following code
 
-``` shell
-$ cd <root of the repo>/c++/1_tf_cv
-$ g++ -O3 -DNDEBUG --std=c++11 object_detection.cc ../libtensorflow-lite.a -ldl -lutil -lstdc++ -lpthread -lm -lz -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -I/home/pi/tensorflow -I/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include -o ssd_detection
-```
+1. go to the `pybind` folder of the repo 
+
+   ```shell
+   $ cd <root of the repo>/c++/1_tf_cv
+   ```
+
+2. run the following command to create a dynamic library for python wrapper
+
+   ```shell
+   $ g++ -O3 -DNDEBUG --std=c++11 object_detection.cc ../libtensorflow-lite.a -ldl -lutil -lstdc++ -lpthread -lm -lz -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -I/home/pi/tensorflow -I/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include -o ssd_detection
+   ```
 
 If there is no problem, you will find a binary file `ssd_detection` 
 
