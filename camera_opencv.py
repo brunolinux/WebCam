@@ -1,8 +1,8 @@
 import cv2
 import time 
-from .base_camera import BaseCamera
-from .pivideoStream import PiVideoStream
-from .detection import Detection
+from base_camera import BaseCamera
+from pivideoStream import PiVideoStream
+from detection import Detection
 
 detector = Detection("./model/detect.tflite", "./model/coco_labels_list.txt")
 
@@ -25,11 +25,11 @@ class Camera(BaseCamera):
             # always take the first image
             img = Camera.piCam.read()
             #print(img.shape)
-
+            print("OK")
             img_1 = cv2.resize(img, (300, 300))
-
+            print("OK1")
             out = detector.frameDetect(img_1)
-
+            print("OK2")
             for n in range(out.numbers): 
                 ymin = int(out.locations[4 * n] * img.shape[0]);
                 xmin = int(out.locations[4 * n + 1] * img.shape[1]);
