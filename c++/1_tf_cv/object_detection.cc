@@ -18,9 +18,9 @@ int main() {
     
     std::cout << "Start" << std::endl;
 
-    std::string model_file("detect.tflite");
-    std::string image_file("test.bmp");
-    std::string label_file("coco_labels_list.txt"); 
+    std::string model_file("../../model/detect.tflite");
+    std::string image_file("../test.bmp");
+    std::string label_file("../../model/coco_labels_list.txt"); 
 
 
     std::cout << "Load file name" << std::endl;
