@@ -1,3 +1,4 @@
-source /home/pi/.virtualenvs/cv/bin/activate 
-gunicorn --bind unix:webcam.sock -m 007 src:webcam
+#source /home/pi/.virtualenvs/cv/bin/activate
+workon cv 
+gunicorn --bind localhost:8000 src:webcam
 deactivate
