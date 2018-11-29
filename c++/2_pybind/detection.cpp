@@ -1,6 +1,7 @@
 #include "detection.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #define IMAGE_MEAN 128.0f
 #define IMAGE_STD 128.0f
@@ -18,7 +19,7 @@ bool ReadLines(const std::string& file_name, std::vector<std::string>* lines) {
 }
 
 
-Detection::Detection(const std::string &model, const std::string &label)
+Detection::Detection(const std::string &model, const std::string &label, int thread)
 { 
     if (!ReadLines(label, &m_labels)) exit(-1);
 
@@ -43,7 +44,7 @@ Detection::Detection(const std::string &model, const std::string &label)
     }    
 
     //m_interpreter->UseNNAPI(true);
-    m_interpreter->SetNumThreads(4);
+    m_interpreter->SetNumThreads(thread);
 
     // Find input tensors.
     if (m_interpreter->inputs().size() != 1) {
@@ -56,43 +57,54 @@ Detection::Detection(const std::string &model, const std::string &label)
 
     // output pointer
     const std::vector<int> outputs = m_interpreter->outputs();
-    m_detection_locations = m_interpreter->tensor(outputs.at(0))->data.f;
-    m_detection_classes = m_interpreter->tensor(outputs.at(1))->data.f;
-    m_detection_scores = m_interpreter->tensor(outputs.at(2))->data.f;
-    m_num_detections  = m_interpreter->tensor(outputs.at(3))->data.f;
+    m_detection_locations = m_interpreter->tensor(outputs.at(0));
+    m_detection_classes = m_interpreter->tensor(outputs.at(1));
+    m_detection_scores = m_interpreter->tensor(outputs.at(2));
+    m_num_detections  = m_interpreter->tensor(outputs.at(3));
+
+    m_output = std::make_shared<OutputInfo>();
 }
 
 
 // frame object detection
-OutputInfo Detection::frameDetect(py::array_t<uint8_t> &input) {
-    FeedInMat(input, m_input_tensor);
+void Detection::frameDetect(py::array_t<uint8_t> &input) {
+    assert(input.nbytes() == m_input_tensor.bytes);
 
+    FeedInMat(input, m_input_tensor);
 
     if(m_interpreter->Invoke() != kTfLiteOk) {
         throw std::runtime_error("Failed to invoke tflite!");
     }
 
-    //
-    OutputInfo output; 
+
+
+    m_output->clear();
     int num = 0;
 
-    for (int d = 0; d < (int)(*m_num_detections); d++) {
-        //std::cout << "num :" << d << std::endl;
-        if (m_detection_scores[d] < m_threshold) continue;            
+/*
+    std::cout << m_num_detections->bytes / sizeof(float) << std::endl;
+    std::cout << m_detection_classes->bytes/sizeof(float) << std::endl;
+    std::cout << m_detection_scores->bytes/sizeof(float) << std::endl;
+    std::cout << m_detection_locations->bytes/sizeof(float)/4 << std::endl;
+*/ 
+    int num_detection = (int)(m_num_detections->data.f[0]);
+    //std::cout << num_detection << "\t"; 
+    for (int d = 0; d < num_detection; d++) {
+        if (m_detection_scores->data.f[d] < m_threshold) continue;            
 
-
-        output.classes.push_back(m_labels[m_detection_classes[d]]);
-        output.scores.push_back(m_detection_scores[d]);
-        output.locations.push_back(m_detection_locations[4 * d]);
-        output.locations.push_back(m_detection_locations[4 * d + 1]);
-        output.locations.push_back(m_detection_locations[4 * d + 2]);
-        output.locations.push_back(m_detection_locations[4 * d + 3]);
+        
+        m_output->classes.push_back(m_labels[m_detection_classes->data.f[d]]);
+        m_output->scores.push_back(m_detection_scores->data.f[d]);
+        m_output->locations.push_back(m_detection_locations->data.f[4 * d]);
+        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 1]);
+        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 2]);
+        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 3]);
 
         num++;
     }    
 
-    output.numbers = num;
-    return output;
+    m_output->numbers = num;
+    return;
 }
 
 

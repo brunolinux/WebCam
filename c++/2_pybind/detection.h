@@ -16,15 +16,22 @@ typedef struct {
     std::vector<std::string> classes; 
     std::vector<float> scores;
     int numbers = 0; 
+
+    void clear() { 
+        locations.clear();
+        classes.clear();
+        scores.clear();
+        numbers = 0;
+    };
 } OutputInfo;
 
 
 class Detection {
 
 public:
-    Detection(const std::string &model, const std::string &label);
+    Detection(const std::string &model, const std::string &label, int thread);
     
-    OutputInfo frameDetect(py::array_t<uint8_t> &input);
+    void frameDetect(py::array_t<uint8_t> &input);
 
     int width() const {
         return m_input_tensor->dims->data[2];
@@ -46,6 +53,9 @@ public:
         m_threshold = threshold;
     }
 
+    OutputInfo *get_output() const { 
+        return m_output.get();
+    }
 private: 
     void FeedInMat(py::array_t<uint8_t> &input, TfLiteTensor *tensor);
 
@@ -56,13 +66,15 @@ private:
     TfLiteTensor* m_input_tensor = nullptr;
 
 
-    float* m_detection_locations = nullptr;
-    float* m_detection_classes = nullptr;
-    float* m_detection_scores = nullptr;
-    float* m_num_detections  = nullptr;   
+    TfLiteTensor* m_detection_locations = nullptr;
+    TfLiteTensor* m_detection_classes = nullptr;
+    TfLiteTensor* m_detection_scores = nullptr;
+    TfLiteTensor* m_num_detections  = nullptr;   
 
 
-    double m_threshold = .3f; 
+    double m_threshold = 0.5; 
+
+    std::shared_ptr<OutputInfo> m_output;
 };
 
 
@@ -70,11 +82,13 @@ private:
 
 PYBIND11_MODULE(detection, m) {
     py::class_<Detection>(m, "Detection")
-        .def(py::init<const std::string &, const std::string &>())
+        .def(py::init<const std::string &, const std::string &, int>())
         .def("frameDetect", &Detection::frameDetect)
         .def("width", &Detection::width)
         .def("height", &Detection::height)
-        .def_property("threshold", &Detection::get_threshold, &Detection::set_threshold);
+        .def("channel", &Detection::input_channels)
+        .def_property("threshold", &Detection::get_threshold, &Detection::set_threshold)
+        .def("output", &Detection::get_output);
 
     py::class_<OutputInfo>(m, "OutputInfo")
         .def_readwrite("locations", &OutputInfo::locations)

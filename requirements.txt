@@ -1,0 +1,11 @@
+Click==7.0
+Flask==1.0.2
+itsdangerous==1.1.0
+Jinja2==2.10
+MarkupSafe==1.1.0
+numpy==1.15.4
+picamera==1.13
+pip-autoremove==0.9.1
+pybind11==2.2.4
+uWSGI==2.0.17.1
+Werkzeug==0.14.1

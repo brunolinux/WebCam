@@ -8,16 +8,17 @@ Here is the step:
 
 
 
-1. go to the `pybind` folder of the repo 
+1. go to the `pybind` folder of the repo and activate the virtual environment
 
    ```shell
    $ cd <root of repo>/c++/2_pybind
+   $ workon cv
    ```
 
 2. run the following command to create a dynamic library for python wrapper
 
    ```shell
-   $ g++ -DNDEBUG -O3 -Wall -std=c++11 -shared -fPIC `python -m pybind11 --includes`  detection.cpp ../libtensorflow-lite.a -ldl -lutil -lstdc++ -lpthread -lm -lz -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -I/home/pi/tensorflow -I/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include -o detection`python3-config --extension-suffix` 
+   $ g++ -DNDEBUG -O3 -Wall -std=c++14 -shared -fPIC `python -m pybind11 --includes`  detection.cpp ../libtensorflow-lite.a -ldl -lutil -lstdc++ -lpthread -lm -lz -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -I/home/pi/tensorflow -I/home/pi/tensorflow/tensorflow/lite/tools/make/downloads/flatbuffers/include -o detection`python3-config --extension-suffix` 
    ```
 
 3. run the python script 

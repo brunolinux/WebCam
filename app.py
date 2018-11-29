@@ -28,4 +28,4 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    webcam.run(debug=False, port=8000, threaded=True)
+    webcam.run(host="0.0.0.0", debug=False, port=8000, threaded=True)
