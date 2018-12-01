@@ -61,13 +61,11 @@ Detection::Detection(const std::string &model, const std::string &label, int thr
     m_detection_classes = m_interpreter->tensor(outputs.at(1));
     m_detection_scores = m_interpreter->tensor(outputs.at(2));
     m_num_detections  = m_interpreter->tensor(outputs.at(3));
-
-    m_output = std::make_shared<OutputInfo>();
 }
 
 
 // frame object detection
-void Detection::frameDetect(py::array_t<uint8_t> &input) {
+void Detection::frameDetect(py::array_t<uint8_t> &input, struct OutputInfo &output) {
     assert(input.nbytes() == m_input_tensor.bytes);
 
     FeedInMat(input, m_input_tensor);
@@ -78,7 +76,7 @@ void Detection::frameDetect(py::array_t<uint8_t> &input) {
 
 
 
-    m_output->clear();
+    output.clear();
     int num = 0;
 
 /*
@@ -93,17 +91,17 @@ void Detection::frameDetect(py::array_t<uint8_t> &input) {
         if (m_detection_scores->data.f[d] < m_threshold) continue;            
 
         
-        m_output->classes.push_back(m_labels[m_detection_classes->data.f[d]]);
-        m_output->scores.push_back(m_detection_scores->data.f[d]);
-        m_output->locations.push_back(m_detection_locations->data.f[4 * d]);
-        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 1]);
-        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 2]);
-        m_output->locations.push_back(m_detection_locations->data.f[4 * d + 3]);
+        output.classes.push_back(m_labels[m_detection_classes->data.f[d]]);
+        output.scores.push_back(m_detection_scores->data.f[d]);
+        output.locations.push_back(m_detection_locations->data.f[4 * d]);
+        output.locations.push_back(m_detection_locations->data.f[4 * d + 1]);
+        output.locations.push_back(m_detection_locations->data.f[4 * d + 2]);
+        output.locations.push_back(m_detection_locations->data.f[4 * d + 3]);
 
         num++;
     }    
 
-    m_output->numbers = num;
+    output.numbers = num;
     return;
 }
 

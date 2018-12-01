@@ -11,7 +11,11 @@
 namespace py = pybind11;
 
 
-typedef struct {
+struct OutputInfo{
+    OutputInfo () {
+        clear();    
+    }
+
     std::vector<float> locations;
     std::vector<std::string> classes; 
     std::vector<float> scores;
@@ -23,7 +27,7 @@ typedef struct {
         scores.clear();
         numbers = 0;
     };
-} OutputInfo;
+} ;
 
 
 class Detection {
@@ -31,7 +35,7 @@ class Detection {
 public:
     Detection(const std::string &model, const std::string &label, int thread);
     
-    void frameDetect(py::array_t<uint8_t> &input);
+    void frameDetect(py::array_t<uint8_t> &input, OutputInfo &output);
 
     int width() const {
         return m_input_tensor->dims->data[2];
@@ -53,9 +57,6 @@ public:
         m_threshold = threshold;
     }
 
-    OutputInfo *get_output() const { 
-        return m_output.get();
-    }
 private: 
     void FeedInMat(py::array_t<uint8_t> &input, TfLiteTensor *tensor);
 
@@ -73,8 +74,6 @@ private:
 
 
     double m_threshold = 0.5; 
-
-    std::shared_ptr<OutputInfo> m_output;
 };
 
 
@@ -87,10 +86,10 @@ PYBIND11_MODULE(detection, m) {
         .def("width", &Detection::width)
         .def("height", &Detection::height)
         .def("channel", &Detection::input_channels)
-        .def_property("threshold", &Detection::get_threshold, &Detection::set_threshold)
-        .def("output", &Detection::get_output);
+        .def_property("threshold", &Detection::get_threshold, &Detection::set_threshold);
 
     py::class_<OutputInfo>(m, "OutputInfo")
+        .def(py::init())
         .def_readwrite("locations", &OutputInfo::locations)
         .def_readwrite("classes", &OutputInfo::classes)
         .def_readwrite("scores", &OutputInfo::scores)

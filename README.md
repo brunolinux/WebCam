@@ -2,11 +2,56 @@
 
 Stack: Flask + Tensorflow lite + OpenCV 
 
+## 1. How to run 
+
+### 1.1 create virtual environment
+
+```shell
+$ cd ~
+$ virtualenv env_webcam --python=python3 
+$ source env_webcam/bin/activate
+```
+
+### 1.2 clone the repo and install required libraries
+
+```shell
+(env_webcam) $ cd ~
+(env_webcam) $ git clone https://github.com/brunolinux/WebCam.git
+(env_webcam) $ cd WebCam
+(env_webcam) $ pip install -r requirements.txt
+```
+
+**Note:** If you want to run this demo on your raspberry pi board, the **opencv** library is obligatory. You can reference to the steps below. 
+
+### 1.3 start up the app 
+
+```shell
+(env_webcam) $ python app.py
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
+```
+
+Then you can open a browser and input the ip address of your raspberry pi borad (with port `8000`). You can see the image with object detection results
+
+### 1.4 using uwsgi and supervisor to self-start after power
+
+```shell
+$ sudo apt-get install supervisor
+$ cd ~/WebCam
+$ sudo cp ./conf/supervisor_webcam.conf /etc/supervisor/conf.d/
+```
+
+The reboot the board. 
 
 
 
+## 2. Compilation
 
-### 1. OpenCV Native Compilation 
+### 2.1 OpenCV Native Compilation 
 
 Reference: [Install Opencv 4 on your Raspberry Pi](https://www.pyimagesearch.com/2018/09/26/install-opencv-4-on-your-raspberry-pi/) 
 
@@ -27,7 +72,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 
 
-### 2. Tensorflow Lite nativa compilation 
+### 2.2 Tensorflow Lite nativa compilation 
 
 Reference: [TensorFlow Lite for Raspberry Pi](https://www.tensorflow.org/lite/rpi) 
 

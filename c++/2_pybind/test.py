@@ -1,17 +1,19 @@
 import detection
+
+import sys
+sys.path.append("/home/pi/WebCam/")
 import cv2 
 
 detector = detection.Detection("../../model/detect.tflite", "../../model/coco_labels_list.txt", 1)
+out = detection.OutputInfo()
 
 img = cv2.imread("../test.bmp")
 
 img_1 = cv2.resize(img, (300, 300))
 img_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2RGB)
 
-for i in range(200):
-    detector.frameDetect(img_1)
-    out = detector.output();
-    print("Finished: ", i)
+
+detector.frameDetect(img_1, out)
 
 for n in range(out.numbers): 
     ymin = int(out.locations[4 * n] * img.shape[0]);
