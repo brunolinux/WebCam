@@ -23,7 +23,24 @@ $ source env_webcam/bin/activate
 
 **Note:** If you want to run this demo on your raspberry pi board, the **opencv** library is obligatory. You can reference to the steps below. 
 
-### 1.3 start up the app 
+### 1.3 change the gmail account 
+
+Here, I have add a function that a mail will be sent to  a list of receivers using gmail account. 
+
+You need to change 4 variables in *app.py*
+
+```python
+# gmail account
+username = "your@gmail.com"
+password = "yourpasswd"
+
+# sender email (can be same with the gamil account above)
+sender = "your@gmail.com"
+# receivers (a list of email)
+receivers = ["another@mail.com"]
+```
+
+### 1.4 start up the app 
 
 ```shell
 (env_webcam) $ python app.py
