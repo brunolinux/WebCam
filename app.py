@@ -6,8 +6,14 @@ from utils import mail
 
 webcam = Flask(__name__)
 
-username = "your@email.com"
+# gmail account
+username = "your@gmail.com"
 password = "yourpasswd"
+
+# sender email (can be same with the gamil account above)
+sender = "your@gmail.com"
+# receivers (a list of email)
+receivers = ["another@mail.com"]
 
 @webcam.route('/')
 def index():
@@ -31,5 +37,5 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    mail.mailSend(username, password)
+    mail.mailSend(username, password, sender, receivers)
     webcam.run(host="0.0.0.0", debug=False, port=8000, threaded=True)

@@ -11,9 +11,6 @@ from email.header import Header
 smtp_ssl_host = 'smtp.gmail.com'  # smtp.mail.yahoo.com
 smtp_ssl_port = 587
  
-sender = 'bruno.liuk@gmail.com'
-receivers = ['bruno.liuk@gmail.com']  
- 
 
 
 def checkPingStatus():
@@ -32,7 +29,7 @@ def getIPAddress():
     return ip
 
 
-def mailSend(username, password):
+def mailSend(username, password, sender, receivers):
     while True: 
         status = checkPingStatus()
         if status:
