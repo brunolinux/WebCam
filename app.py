@@ -2,9 +2,12 @@
 from importlib import import_module
 from flask import Flask, render_template, Response
 from camera_opencv import Camera	
+from utils import mail
 
 webcam = Flask(__name__)
 
+username = "your@email.com"
+password = "yourpasswd"
 
 @webcam.route('/')
 def index():
@@ -28,4 +31,5 @@ def video_feed():
 
 
 if __name__ == '__main__':
+    mail.mailSend(username, password)
     webcam.run(host="0.0.0.0", debug=False, port=8000, threaded=True)

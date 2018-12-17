@@ -37,6 +37,23 @@ $ source env_webcam/bin/activate
 
 Then you can open a browser and input the ip address of your raspberry pi borad (with port `8000`). You can see the image with object detection results
 
+Note: if you want to use the port `80`, then change the file *app.py*  
+
+```python
+webcam.run(host="0.0.0.0", debug=False, port=80, threaded=True)
+```
+
+run the script using administrator account 
+
+```shell
+$ cd ~/WebCam
+$ sudo ../env_webcam/bin/python app.py
+```
+
+
+
+
+
 ### 1.4 using uwsgi and supervisor to self-start after power
 
 ```shell
