@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from importlib import import_module
-from flask import Flask, render_template, Response
-from camera_opencv import Camera	
+from flask import Flask, render_template, Response	
 from utils import mail
 
 webcam = Flask(__name__)
@@ -29,6 +28,8 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
+#from camera_opencv import Camera
+from camera_pc import Camera
 @webcam.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
@@ -37,5 +38,5 @@ def video_feed():
 
 
 if __name__ == '__main__':
-    mail.mailSend(username, password, sender, receivers)
-    webcam.run(host="0.0.0.0", debug=False, port=8000, threaded=True)
+    #mail.mailSend(username, password, sender, receivers)
+    webcam.run(host="127.0.0.1", debug=False, port=8000, threaded=True)
