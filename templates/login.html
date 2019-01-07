@@ -1,0 +1,14 @@
+{% block body %}
+{% if session['logged_in'] %} 
+<h2>You're logged in! </h2>
+{% else %}
+    {% for message in get_flashed_messages() %}
+        <p style="color: red">{{ message }}</p>
+    {% endfor %}
+    <form action="/login" method="post">
+      <input type="username" name="username" placeholder="Username">
+      <input type="password" name="password" placeholder="Password">
+      <input type="submit" value="Log in">
+    </form>
+{% endif %}
+{% endblock %}

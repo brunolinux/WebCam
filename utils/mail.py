@@ -29,7 +29,7 @@ def getIPAddress():
     return ip
 
 
-def mailSend(username, password, sender, receivers):
+def mailSend(gmailConfig):
     while True: 
         status = checkPingStatus()
         if status:
@@ -48,8 +48,8 @@ def mailSend(username, password, sender, receivers):
     try:
         smtpObj = smtplib.SMTP(smtp_ssl_host, smtp_ssl_port)
         smtpObj.starttls() 
-        smtpObj.login(username, password)
-        smtpObj.sendmail(sender, receivers, message.as_string())
+        smtpObj.login(gmailConfig["user"], gmailConfig["passwd"])
+        smtpObj.sendmail(gmailConfig["sender"], gmailConfig["receivers"], message.as_string())
         smtpObj.quit()
         print("mail send success")
     except smtplib.SMTPException:

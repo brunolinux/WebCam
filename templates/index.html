@@ -5,6 +5,18 @@
   </head>
   <body>
     <h1>Video Streaming Demonstration</h1>
+
+    {% if session['logged_in'] %} 
+        <form action="/logout" method="post">
+            <input type="submit" value="Log out">
+        </form>
+    {% else %} 
+        <form method='post'>
+            <input type="submit" value="Login">
+        </form>
+    {% endif %}
+
+    
     <img src="{{ url_for('video_feed') }}">
   </body>
 </html>
