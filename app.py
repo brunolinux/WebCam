@@ -69,6 +69,14 @@ def logout():
     return redirect(url_for('home'))
 
 
+@webcam.route('/onbeforeunload')
+def onUnLoadEvent():
+    if session.get('logged_in', False):
+        session.clear()
+        current_app.admin_is_logged = False
+        #print("cleared")
+    return "nothing"
+
 if __name__ == '__main__':
     if is_os_arm:
         mail.mailSend(setting.getGamilConfig())

@@ -4,6 +4,23 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}"/>
   </head>
   <body>
+    <script src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+    <script>
+        function leave() {
+            $.ajax({
+                url: '/onbeforeunload', 
+                type: 'get', 
+                success: function(data) {}           
+            });     
+        }
+
+        window.addEventListener('beforeunload', function (e) {
+            leave();
+        });            
+
+
+    </script>
+
     <h1>Video Streaming Demonstration</h1>
 
     {% if session['logged_in'] %} 
@@ -15,8 +32,6 @@
             <input type="submit" value="Login">
         </form>
     {% endif %}
-
-    
     <img src="{{ url_for('video_feed') }}">
   </body>
 </html>
