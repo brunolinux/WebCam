@@ -1,11 +1,14 @@
-import cv2
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+from . import cv2
 import time 
 import numpy as np
 import pickle as pkl
 import random
-from base_camera import BaseCamera
-from pivideoStream import PiVideoStream
-from detection import Detection, OutputInfo
+from .base_camera import BaseCamera
+from .pivideoStream import PiVideoStream
+from .detection import Detection, OutputInfo
 
 detector = Detection("./model/detect.tflite", "./model/coco_labels_list.txt", 4)
 img_buf = np.zeros((detector.height(),detector.width(), 3), dtype=np.uint8)

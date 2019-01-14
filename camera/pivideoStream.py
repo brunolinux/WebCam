@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
 from picamera.array import PiRGBArray 
 from picamera import PiCamera 

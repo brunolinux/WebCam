@@ -4,12 +4,12 @@
 import sys
 sys.path.append('..')
 
-from pivideoStream import PiVideoStream 
+from .pivideoStream import PiVideoStream 
 from utils.fps import FPS 
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import argparse
-import cv2 
+import .cv2 
 import time
 
 # construct the argument parse and parse the arguments

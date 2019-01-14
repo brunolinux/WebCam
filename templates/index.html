@@ -6,18 +6,13 @@
   <body>
     <script src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
     <script>
-        function leave() {
+        window.addEventListener('beforeunload', function (e) {
             $.ajax({
                 url: '/onbeforeunload', 
                 type: 'get', 
                 success: function(data) {}           
-            });     
-        }
-
-        window.addEventListener('beforeunload', function (e) {
-            leave();
+            });  
         });            
-
 
     </script>
 
@@ -27,11 +22,45 @@
         <form action="/logout" method="post">
             <input type="submit" value="Log out">
         </form>
+
+        <form action="/config" method="post">
+            <label for="resolution">Resolution</label>
+            <select id="resolution">
+              <option value="200x200">200 x 200</option>
+              <option value="300x300">300 x 300</option>
+              <option value="400x400">400 x 400</option>
+              <option value="500x500">500 x 500</option>
+            </select>
+            <br>
+            <label for="brightness">Brightness</label>
+            <input type="range" min="1" max="100" value="50" class="slider" id="brightness">
+            <br>
+            <label for="contrast">Contrast</label>
+            <input type="range" min="-100" max="100" value="50" class="slider" id="contrast">
+            <br>
+            <label for="drc">DRC_strength</label>
+            <select id="resolution">
+              <option value="off">off</option>
+              <option value="low">low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+            </select>
+            <br>
+        </form>
+
+        <script>
+            $("resolution").change(function (){
+                            
+            })
+        </script>
     {% else %} 
         <form method='post'>
             <input type="submit" value="Login">
         </form>
     {% endif %}
-    <img src="{{ url_for('video_feed') }}">
+
+    <img src="{{ url_for('webcam.video_feed') }}">
+
+
   </body>
 </html>
