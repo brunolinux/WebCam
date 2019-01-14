@@ -10,11 +10,11 @@ from .base_camera import BaseCamera
 from .pivideoStream import PiVideoStream
 from .detection import Detection, OutputInfo
 
-detector = Detection("./model/detect.tflite", "./model/coco_labels_list.txt", 4)
+detector = Detection("./camera/model/detect.tflite", "./camera/model/coco_labels_list.txt", 4)
 img_buf = np.zeros((detector.height(),detector.width(), 3), dtype=np.uint8)
 
 out = OutputInfo()
-colors = pkl.load(open("pallete", "rb"))
+colors = pkl.load(open("./camera/pallete", "rb"))
 
 
 class Camera(BaseCamera):   
