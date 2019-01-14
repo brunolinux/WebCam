@@ -34,5 +34,4 @@ if __name__ == '__main__':
     # activate application context 
     with app.app_context():
         current_app.admin_is_logged = False 
-
     app.run(host=host, debug=debug, port=setting.getPortNum(), threaded=True)

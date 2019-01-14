@@ -5,16 +5,7 @@
   </head>
   <body>
     <script src="{{ url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
-    <script>
-        window.addEventListener('beforeunload', function (e) {
-            $.ajax({
-                url: '/onbeforeunload', 
-                type: 'get', 
-                success: function(data) {}           
-            });  
-        });            
 
-    </script>
 
     <h1>Video Streaming Demonstration</h1>
 
@@ -25,27 +16,30 @@
 
         <form action="/config" method="post">
             <label for="resolution">Resolution</label>
-            <select id="resolution">
-              <option value="200x200">200 x 200</option>
-              <option value="300x300">300 x 300</option>
-              <option value="400x400">400 x 400</option>
-              <option value="500x500">500 x 500</option>
+            <select id="resolution" name="resolution">
+              <option value="200x200" {% if para.resolution =="200x200" %} selected {% endif %}>200 x 200</option>
+              <option value="300x300" {% if para.resolution =="300x300" %} selected {% endif %}>300 x 300</option>
+              <option value="400x400" {% if para.resolution =="400x400" %} selected {% endif %}>400 x 400</option>
+              <option value="500x500" {% if para.resolution =="500x500" %} selected {% endif %}>500 x 500</option>
             </select>
             <br>
             <label for="brightness">Brightness</label>
-            <input type="range" min="1" max="100" value="50" class="slider" id="brightness">
+            <input type="range" min="1" max="100" value="{{para.brightness}}" class="slider" id="brightness" name="brightness">
             <br>
             <label for="contrast">Contrast</label>
-            <input type="range" min="-100" max="100" value="50" class="slider" id="contrast">
+            <input type="range" min="-100" max="100" value="{{ para.contrast}}" class="slider" id="contrast"  name="contrast">
             <br>
             <label for="drc">DRC_strength</label>
-            <select id="resolution">
-              <option value="off">off</option>
-              <option value="low">low</option>
-              <option value="medium">medium</option>
-              <option value="high">high</option>
+            <select id="drc" name="drc">
+              <option value="off" {% if para.drc =="200x200" %} selected {% endif %}>off</option>
+              <option value="low" {% if para.drc =="low" %} selected {% endif %}>low</option>
+              <option value="medium" {% if para.drc =="medium" %} selected {% endif %}>medium</option>
+              <option value="high" {% if para.drc =="high" %} selected {% endif %}>high</option>
             </select>
             <br>
+            <button>show text</button><br>
+            <button>Show Probablity</button><br>
+            <input type="submit" value="Ensure the modification">
         </form>
 
         <script>

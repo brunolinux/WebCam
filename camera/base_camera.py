@@ -60,7 +60,7 @@ class BaseCamera(object):
     last_access = 0  # time of last client access to the camera
     event = CameraEvent()
 
-    def __init__(self):
+    def start(self):
         """Start the background camera thread if it isn't running yet."""
         if BaseCamera.thread is None:
             # start background frame thread
@@ -69,7 +69,7 @@ class BaseCamera(object):
 
             # wait until frames are available
             while self.get_frame() is None:
-                time.sleep(0)
+                time.sleep(300)
 
     def get_frame(self):
         """Return the current camera frame."""
@@ -108,4 +108,8 @@ class BaseCamera(object):
     @staticmethod
     def stopCamera():
         """"stop the camera to take pictures"""
+        raise RuntimeError('Must be implemented by subclasses.')
+
+    @staticmethod
+    def setCamera(para):
         raise RuntimeError('Must be implemented by subclasses.')

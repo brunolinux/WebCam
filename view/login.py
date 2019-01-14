@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from flask import Blueprint, render_template, request, current_app,  session, redirect, url_for,flash 
+from flask import Blueprint, render_template, request, current_app, session, redirect, url_for,flash 
 from utils import setting 
 
 login = Blueprint('login', __name__)

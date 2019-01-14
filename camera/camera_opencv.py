@@ -58,3 +58,9 @@ class Camera(BaseCamera):
     @staticmethod
     def stopCamera():
         Camera.piCam.stop()
+
+
+    @staticmethod
+    def setCamera(para):
+        Camera.piCam.brightness = para["brightness"]
+        Camera.piCam.contrast = para["contrast"]
