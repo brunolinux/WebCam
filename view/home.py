@@ -8,9 +8,10 @@ webcam = Blueprint('webcam', __name__)
 
 _para = {} 
 _para["resolution"] = "200x200"
-_para["drc"] = "off"
+_para["exposure_mode"] = "auto"
 _para["brightness"] = 50
 _para["contrast"] = 0
+_para["saturation"] = 0
 _para["awb_mode"] = "auto"
 
 # check x86 or raspberry pi 
@@ -56,10 +57,11 @@ def gen(camera):
 def config():
     """Configuration"""
     _para["resolution"] = request.form.get("resolution", "200x200")
-    _para["drc"] = request.form.get("drc", "off") 
+    _para["exposure_mode"] = request.form.get("exposure_mode", "auto") 
     _para["brightness"] = int(request.form.get("brightness", 50))
     _para["contrast"] = int(request.form.get("contrast", 0))
-    _para["awb_mode"] = int(request.form.get("awb", "auto"))
+    _para["saturation"] = int(request.form.get("saturation", 0))
+    _para["awb_mode"] = request.form.get("awb", "auto")
     #print(current_app.para)
     if isARMOS():
         _camera.setCamera(_para)

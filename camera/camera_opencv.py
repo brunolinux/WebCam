@@ -18,7 +18,8 @@ colors = pkl.load(open("./camera/pallete", "rb"))
 
 
 class Camera(BaseCamera):   
-    piCam = PiVideoStream(resolution=(640, 480))
+    _resolution = (640, 480)
+    piCam = PiVideoStream(resolution=_resolution)
     startup_frame = 0 
 
     @staticmethod
@@ -35,7 +36,7 @@ class Camera(BaseCamera):
         while True:            
             # always take the first image
             img = Camera.piCam.read()
-            if img.shape[0] != 480 and img.shape[1] != 640: 
+            if img.shape[0] != Camera._resolution[1] or img.shape[1] != Camera._resolution[0]: 
                 continue
 
             img_buf = cv2.resize(img, (300, 300))
@@ -64,5 +65,11 @@ class Camera(BaseCamera):
     def setCamera(para):
         Camera.piCam.brightness = para["brightness"]
         Camera.piCam.contrast = para["contrast"]
+        Camera.piCam.saturation = para["saturation"] 
         Camera.piCam.awb_mode = para["awb_mode"]
-        print(Camera.piCam.awb_mode)
+        Camera.piCam.exposure_mode = para["exposure_mode"] 
+
+        #width, height = para["resolution"].split('x')
+        #Camera._resolution = (int(width), int(height)) 
+        #Camera.piCam.resolution = Camera._resolution
+        #print(Camera.piCam.awb_mode)

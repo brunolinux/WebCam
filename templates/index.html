@@ -29,26 +29,38 @@
             <label for="contrast">Contrast</label>
             <input type="range" min="-100" max="100" value="{{ para.contrast}}" class="slider" id="contrast"  name="contrast">
             <br>
-            <label for="drc">DRC_strength</label>
-            <select id="drc" name="drc">
-              <option value="off" {% if para.drc =="off" %} selected {% endif %}>off</option>
-              <option value="low" {% if para.drc =="low" %} selected {% endif %}>low</option>
-              <option value="medium" {% if para.drc =="medium" %} selected {% endif %}>medium</option>
-              <option value="high" {% if para.drc =="high" %} selected {% endif %}>high</option>
+            <label for="saturation">Saturation</label>
+            <input type="range" min="-100" max="100" value="{{ para.saturation}}" class="slider" id="saturation"  name="saturation">
+            <br>
+            <label for="exposure_mode">Exposure mode</label>
+            <select id="exposure_mode" name="exposure_mode">
+              <option value="off" {% if para.exposure_mode =="off" %} selected {% endif %}>off</option>
+              <option value="auto" {% if para.exposure_mode =="auto" %} selected {% endif %}>auto</option>
+              <option value="night" {% if para.exposure_mode =="night" %} selected {% endif %}>night</option>
+              <option value="nightpreview" {% if para.exposure_mode =="nightpreview" %} selected {% endif %}>nightpreview</option>
+              <option value="blacklight" {% if para.exposure_mode =="blacklight" %} selected {% endif %}>blacklight</option>
+              <option value="spotlight" {% if para.exposure_mode =="spotlight" %} selected {% endif %}>spotlight</option>
+              <option value="sports" {% if para.exposure_mode =="sports" %} selected {% endif %}>sports</option>
+              <option value="snow" {% if para.exposure_mode =="snow" %} selected {% endif %}>snow</option>
+              <option value="beach" {% if para.exposure_mode =="beach" %} selected {% endif %}>beach</option>
+              <option value="verylong" {% if para.exposure_mode =="verylong" %} selected {% endif %}>verylong</option>
+              <option value="fixedfps" {% if para.exposure_mode =="fixedfps" %} selected {% endif %}>fixedfps</option>
+              <option value="antishake" {% if para.exposure_mode =="antishake" %} selected {% endif %}>antishake</option>
+              <option value="fireworks" {% if para.exposure_mode =="fireworks" %} selected {% endif %}>fireworks</option>
             </select>
             <br>
             <label for="awb">Auto white balance Mode</label>
             <select id="awb" name="awb">
-              <option value="off" {% if para.drc =="off" %} selected {% endif %}>off</option>
-              <option value="auto" {% if para.drc =="auto" %} selected {% endif %}>auto</option>
-              <option value="sunlight" {% if para.drc =="sunlight" %} selected {% endif %}>sunlight</option>
-              <option value="cloudy" {% if para.drc =="cloudy" %} selected {% endif %}>cloudy</option>
-              <option value="shade" {% if para.drc =="shade" %} selected {% endif %}>shade</option>
-              <option value="tungsten" {% if para.drc =="tungsten" %} selected {% endif %}>tungsten</option>
-              <option value="fluorescent" {% if para.drc =="fluorescent" %} selected {% endif %}>fluorescent</option>
-              <option value="incandescent" {% if para.drc =="incandescent" %} selected {% endif %}>tungsten</option>
-              <option value="flash" {% if para.drc =="flash" %} selected {% endif %}>flash</option>
-              <option value="horizon" {% if para.drc =="horizon" %} selected {% endif %}>horizon</option>
+              <option value="off" {% if para.awb_mode =="off" %} selected {% endif %}>off</option>
+              <option value="auto" {% if para.awb_mode =="auto" %} selected {% endif %}>auto</option>
+              <option value="sunlight" {% if para.awb_mode =="sunlight" %} selected {% endif %}>sunlight</option>
+              <option value="cloudy" {% if para.awb_mode =="cloudy" %} selected {% endif %}>cloudy</option>
+              <option value="shade" {% if para.awb_mode =="shade" %} selected {% endif %}>shade</option>
+              <option value="tungsten" {% if para.awb_mode =="tungsten" %} selected {% endif %}>tungsten</option>
+              <option value="fluorescent" {% if para.awb_mode =="fluorescent" %} selected {% endif %}>fluorescent</option>
+              <option value="incandescent" {% if para.awb_mode =="incandescent" %} selected {% endif %}>tungsten</option>
+              <option value="flash" {% if para.awb_mode =="flash" %} selected {% endif %}>flash</option>
+              <option value="horizon" {% if para.awb_mode =="horizon" %} selected {% endif %}>horizon</option>
             </select>
             <br>
             <button>show text</button><br>
