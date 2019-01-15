@@ -64,3 +64,5 @@ class Camera(BaseCamera):
     def setCamera(para):
         Camera.piCam.brightness = para["brightness"]
         Camera.piCam.contrast = para["contrast"]
+        Camera.piCam.awb_mode = para["awb_mode"]
+        print(Camera.piCam.awb_mode)

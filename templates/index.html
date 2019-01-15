@@ -31,10 +31,24 @@
             <br>
             <label for="drc">DRC_strength</label>
             <select id="drc" name="drc">
-              <option value="off" {% if para.drc =="200x200" %} selected {% endif %}>off</option>
+              <option value="off" {% if para.drc =="off" %} selected {% endif %}>off</option>
               <option value="low" {% if para.drc =="low" %} selected {% endif %}>low</option>
               <option value="medium" {% if para.drc =="medium" %} selected {% endif %}>medium</option>
               <option value="high" {% if para.drc =="high" %} selected {% endif %}>high</option>
+            </select>
+            <br>
+            <label for="awb">Auto white balance Mode</label>
+            <select id="awb" name="awb">
+              <option value="off" {% if para.drc =="off" %} selected {% endif %}>off</option>
+              <option value="auto" {% if para.drc =="auto" %} selected {% endif %}>auto</option>
+              <option value="sunlight" {% if para.drc =="sunlight" %} selected {% endif %}>sunlight</option>
+              <option value="cloudy" {% if para.drc =="cloudy" %} selected {% endif %}>cloudy</option>
+              <option value="shade" {% if para.drc =="shade" %} selected {% endif %}>shade</option>
+              <option value="tungsten" {% if para.drc =="tungsten" %} selected {% endif %}>tungsten</option>
+              <option value="fluorescent" {% if para.drc =="fluorescent" %} selected {% endif %}>fluorescent</option>
+              <option value="incandescent" {% if para.drc =="incandescent" %} selected {% endif %}>tungsten</option>
+              <option value="flash" {% if para.drc =="flash" %} selected {% endif %}>flash</option>
+              <option value="horizon" {% if para.drc =="horizon" %} selected {% endif %}>horizon</option>
             </select>
             <br>
             <button>show text</button><br>

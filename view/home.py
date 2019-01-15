@@ -11,6 +11,7 @@ _para["resolution"] = "200x200"
 _para["drc"] = "off"
 _para["brightness"] = 50
 _para["contrast"] = 0
+_para["awb_mode"] = "auto"
 
 # check x86 or raspberry pi 
 if isARMOS():
@@ -58,7 +59,10 @@ def config():
     _para["drc"] = request.form.get("drc", "off") 
     _para["brightness"] = int(request.form.get("brightness", 50))
     _para["contrast"] = int(request.form.get("contrast", 0))
+    _para["awb_mode"] = int(request.form.get("awb", "auto"))
     #print(current_app.para)
+    if isARMOS():
+        _camera.setCamera(_para)
     return redirect(url_for('.home'))
 
 
