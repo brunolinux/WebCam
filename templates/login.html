@@ -1,14 +1,78 @@
-{% block body %}
-{% if session['logged_in'] %} 
-<h2>You're logged in! </h2>
-{% else %}
-    {% for message in get_flashed_messages() %}
-        <p style="color: red">{{ message }}</p>
-    {% endfor %}
-    <form action="/login" method="post">
-      <input type="username" name="username" placeholder="Username">
-      <input type="password" name="password" placeholder="Password">
-      <input type="submit" value="Log in">
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <style>
+        .container{
+            display: inline-block; 
+            background-color:#FBF9EA;
+            border-radius: 20px;
+            width: 300px;
+            height: 325px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            padding: 30px;
+        }
+        h5{color: #777}
+        h6{color: #777}
+        body{ background-color: #d5d5d5}
+        
+
+    </style>
+    <link rel="stylesheet" href="signin.css">
+
+</head>
+<body>
+    {% if session['logged_in'] %}
+    <h2>You're logged in! </h2>
+    {% else %}
+        {% for message in get_flashed_messages() %}
+            <!--<p style="color: red">{{ message }}</p>-->
+            <div class="alert alert-warning" role="alert">
+                <strong>Sorry!</strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+        {% endfor %}
+        <!--
+        <form action="/login" method="post">
+        <input type="username" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Log in">
+        </form>
+        -->
+
+        
+        <form action="/login" method="post">
+        <div class="container">
+        
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <div class="form-group">
+                <label for="username" class="sr-only"><h5>Username</h5></label>
+                <input type="username" class="form-control" id="username" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label for="password" class="sr-only"><h5>Password</h5></label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="checkbox mb-3">
+                    <label>
+                      <input type="checkbox" value="remember-me"> Remember me
+                    </label>
+            </div>
+
+            <input type="submit" class="btn btn-lg btn-secondary btn-block" value="Log in">
+       </div>
     </form>
-{% endif %}
-{% endblock %}
+
+
+    {% endif %}
+</body>
+</html>
