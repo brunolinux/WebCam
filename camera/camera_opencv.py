@@ -21,6 +21,8 @@ class Camera(BaseCamera):
     _resolution = (640, 480)
     piCam = PiVideoStream(resolution=_resolution)
     startup_frame = 0 
+    _show_text = True 
+    _show_prob = False
 
     @staticmethod
     def frames():
@@ -48,6 +50,8 @@ class Camera(BaseCamera):
                 ymax = min(int(out.locations[4 * n + 2] * img.shape[0]), img.shape[0]);
                 xmax = min(int(out.locations[4 * n + 3] * img.shape[1]), img.shape[1]);
                 color = random.choice(colors)
+                
+                text = "{}{}".format((out.classes[n]+":" if Camera._show_text else ""),(out.scores if Camera._show_prob else ""))
                 cv2.rectangle(img, (xmin, ymin), (xmax, ymax), color, thickness=1);
                 cv2.putText(img, out.classes[n], (xmin, ymin + 12),
                             cv2.FONT_HERSHEY_PLAIN, 1, (225, 255, 255));
@@ -68,7 +72,8 @@ class Camera(BaseCamera):
         Camera.piCam.saturation = para["saturation"] 
         Camera.piCam.awb_mode = para["awb_mode"]
         Camera.piCam.exposure_mode = para["exposure_mode"] 
-
+        Camera._show_text = para["showText"] 
+        Camera._show_prob = para["showProb"]
         #width, height = para["resolution"].split('x')
         #Camera._resolution = (int(width), int(height)) 
         #Camera.piCam.resolution = Camera._resolution

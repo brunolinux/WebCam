@@ -13,6 +13,8 @@ _para["brightness"] = 50
 _para["contrast"] = 0
 _para["saturation"] = 0
 _para["awb_mode"] = "auto"
+_para["showText"] = True
+_para["showProb"] = False
 
 # check x86 or raspberry pi 
 if isARMOS():
@@ -62,6 +64,8 @@ def config():
     _para["contrast"] = int(request.form.get("contrast", 0))
     _para["saturation"] = int(request.form.get("saturation", 0))
     _para["awb_mode"] = request.form.get("awb", "auto")
+    _para["showText"] = True if request.form.get("showText") else False
+    _para["showProb"] = True if request.form.get("showProb") else False
     #print(current_app.para)
     if isARMOS():
         _camera.setCamera(_para)
